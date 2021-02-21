@@ -1,0 +1,25 @@
+{
+  "name": "alfred",
+  "version": "1.0.0",
+  "description": "Manages all the tools back home",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm t"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/c3liujia/Alfred.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/c3liujia/Alfred/issues"
+  },
+  "homepage": "https://github.com/c3liujia/Alfred#readme",
+  "devDependencies": {
+    "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
