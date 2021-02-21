@@ -14,10 +14,11 @@ const sendEmail_1 = require("../helpers/sendEmail");
 function validateLocation(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
         res.sendStatus(200);
-        const userId = req.userId;
-        const rideId = req.rideId;
-        const coordinates = req.coordinates;
-        if (!isWithinGeofence_1.isWithinGeofence(rideId, coordinates)) {
+        const userId = req.body.userId;
+        const rideId = req.body.rideId;
+        const coordinates = req.body.coordinates;
+        const checkWithinGeofence = yield isWithinGeofence_1.isWithinGeofence(rideId, coordinates);
+        if (!checkWithinGeofence) {
             sendEmail_1.sendEmail(userId);
         }
     });

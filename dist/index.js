@@ -34,12 +34,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const bodyparser = __importStar(require("body-parser"));
 const routes_1 = require("./enums/routes");
+const validateLocation_1 = __importDefault(require("./src/services/validateLocation"));
 const port = 3000;
 const app = express_1.default();
 app.use(bodyparser.json());
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
     app.post(routes_1.VALIDATE_RIDE_ROUTE, (req, res) => {
-        res.status(200).send('Request received!');
+        validateLocation_1.default(req, res);
     });
     app.listen(port, () => {
         console.log(`Server running at http://localhost:${port}`);

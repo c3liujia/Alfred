@@ -37,12 +37,12 @@ describe('validateLocation', () => {
         expect(res.sendStatus).toHaveBeenCalledWith(200);
     }));
     test('POST: when validating geofence passes, sendEmail is not triggered', () => __awaiter(void 0, void 0, void 0, function* () {
-        isWithinGeofenceMock.mockReturnValueOnce(true);
+        isWithinGeofenceMock.mockResolvedValue(true);
         yield validatelocation_1.default(req, res);
         expect(sendEmailMock).not.toHaveBeenCalled();
     }));
     test('POST: when validating geofence fails, sendEmail is triggered', () => __awaiter(void 0, void 0, void 0, function* () {
-        isWithinGeofenceMock.mockReturnValueOnce(false);
+        isWithinGeofenceMock.mockRejectedValue(false);
         yield validatelocation_1.default(req, res);
         expect(sendEmailMock).toHaveBeenCalledWith('user1');
     }));

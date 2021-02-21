@@ -1,7 +1,9 @@
 import express from 'express';
 
 export default interface ValidateLocationRequest extends express.Request { 
-  userId: string,
-  rideId: string,
-  coordinates: string
+  body: {
+    userId: string,
+    rideId: string,
+    coordinates: string
+  }
 };
