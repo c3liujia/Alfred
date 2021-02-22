@@ -21,9 +21,11 @@ const isWithinGeofenceMock = isWithinGeofence_1.isWithinGeofence;
 const sendEmailMock = sendEmail_1.sendEmail;
 describe('validateLocation', () => {
     const req = {
-        userId: 'user1',
-        rideId: 'rideNo1',
-        coordinates: '0 0'
+        body: {
+            userId: 'user1',
+            rideId: 'rideNo1',
+            coordinates: '0 0'
+        }
     };
     const res = {
         sendStatus: jest.fn()
@@ -36,15 +38,20 @@ describe('validateLocation', () => {
         yield validatelocation_1.default(req, res);
         expect(res.sendStatus).toHaveBeenCalledWith(200);
     }));
-    test('POST: when validating geofence passes, sendEmail is not triggered', () => __awaiter(void 0, void 0, void 0, function* () {
+    test('POST: when validating geofence is truthy, sendEmail is not triggered', () => __awaiter(void 0, void 0, void 0, function* () {
         isWithinGeofenceMock.mockResolvedValue(true);
         yield validatelocation_1.default(req, res);
         expect(sendEmailMock).not.toHaveBeenCalled();
     }));
-    test('POST: when validating geofence fails, sendEmail is triggered', () => __awaiter(void 0, void 0, void 0, function* () {
-        isWithinGeofenceMock.mockRejectedValue(false);
+    test('POST: when validating geofence is falsy, sendEmail is triggered', () => __awaiter(void 0, void 0, void 0, function* () {
+        isWithinGeofenceMock.mockResolvedValue(false);
         yield validatelocation_1.default(req, res);
         expect(sendEmailMock).toHaveBeenCalledWith('user1');
+    }));
+    test('POST: when error occurs from geofence fails, sendEmail is not triggered', () => __awaiter(void 0, void 0, void 0, function* () {
+        isWithinGeofenceMock.mockRejectedValue('');
+        yield validatelocation_1.default(req, res);
+        expect(sendEmailMock).not.toHaveBeenCalled();
     }));
 });
 //# sourceMappingURL=validateLocation.spec.js.map

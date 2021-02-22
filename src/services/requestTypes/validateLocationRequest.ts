@@ -4,6 +4,9 @@ export default interface ValidateLocationRequest extends express.Request {
   body: {
     userId: string,
     rideId: string,
-    coordinates: string
+    coordinates: {
+      latitude: string,
+      longitude: string
+    }
   }
 };
