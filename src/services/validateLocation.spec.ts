@@ -1,6 +1,6 @@
 import isWithinGeofence from '../helpers/isWithinGeofence';
 import sendEmail from '../helpers/sendEmail';
-import validateLocation from './validatelocation';
+import validateLocation from './validateLocation';
 
 jest.mock('../helpers/isWithinGeofence');
 jest.mock('../helpers/sendEmail');
