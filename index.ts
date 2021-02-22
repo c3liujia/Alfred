@@ -9,6 +9,10 @@ const app: express.Application = express();
 app.use(bodyparser.json());
 
 const startServer = async () => {
+  app.get('/', (req: express.Request, res: express.Response) => {
+    console.log(`You found me!`);
+  });
+  
   app.post(VALIDATE_RIDE_ROUTE, (req: validateLocationRequest, res: express.Response) => {
     validateLocation(req, res);
   });
