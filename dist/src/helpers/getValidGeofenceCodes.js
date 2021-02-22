@@ -12,23 +12,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const isWithinGeofence_1 = __importDefault(require("../helpers/isWithinGeofence"));
-const sendEmail_1 = __importDefault(require("../helpers/sendEmail"));
-function validateLocation(req, res) {
+const aws_sdk_1 = __importDefault(require("aws-sdk"));
+aws_sdk_1.default.config.update({
+    region: "us-east-1"
+});
+const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
+function getValidGeofenceCodes(rideId) {
     return __awaiter(this, void 0, void 0, function* () {
-        res.sendStatus(200);
-        let checkWithinGeofence = true;
+        const params = {
+            TableName: "RideToGeofences",
+            KeyConditionExpression: 'rideId = :id',
+            ExpressionAttributeValues: {
+                ':id': rideId
+            }
+        };
         try {
-            checkWithinGeofence = yield isWithinGeofence_1.default(req.body.rideId, req.body.coordinates);
+            const data = yield docClient.query(params).promise();
+            return data.Items[0] && data.Items[0].geofenceCodes;
         }
-        catch (err) {
-            console.log("error checking if within geofence. try again later...");
-        }
-        if (!checkWithinGeofence) {
-            sendEmail_1.default(req.body.userId);
+        catch (e) {
+            console.warn('Querying for geofence failed for code ', rideId);
+            return [];
         }
     });
 }
-exports.default = validateLocation;
-;
-//# sourceMappingURL=validatelocation.js.map
+exports.default = getValidGeofenceCodes;
+//# sourceMappingURL=getValidGeofenceCodes.js.map

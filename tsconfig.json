@@ -18,7 +18,6 @@
       "src/**/*", "index.ts", "index.spec.ts"
   ],
   "exclude": [
-    "node_modules",
-    "**/*.spec.ts"
+    "node_modules"
   ]
 }

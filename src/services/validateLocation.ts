@@ -1,6 +1,6 @@
 import express from 'express';
-import { isWithinGeofence } from '../helpers/isWithinGeofence';
-import { sendEmail } from '../helpers/sendEmail';
+import isWithinGeofence from '../helpers/isWithinGeofence';
+import sendEmail from '../helpers/sendEmail';
 import ValidateLocationRequest from './requestTypes/validateLocationRequest';
 
 export default async function validateLocation(req: ValidateLocationRequest, res: express.Response) {

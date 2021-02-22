@@ -1,11 +1,9 @@
+import isWithinGeofence from '../helpers/isWithinGeofence';
+import sendEmail from '../helpers/sendEmail';
+import validateLocation from './validatelocation';
 
-import express from 'express';
-import { isWithinGeofence } from '../../helpers/isWithinGeofence';
-import { sendEmail } from '../../helpers/sendEmail';
-import validateLocation from '../validatelocation';
-
-jest.mock('../../helpers/isWithinGeofence');
-jest.mock('../../helpers/sendEmail');
+jest.mock('../helpers/isWithinGeofence');
+jest.mock('../helpers/sendEmail');
 
 const isWithinGeofenceMock = isWithinGeofence as jest.MockedFunction<typeof isWithinGeofence>;
 const sendEmailMock = sendEmail as jest.MockedFunction<typeof sendEmail>;
