@@ -37,7 +37,6 @@ aws_sdk_1.default.config.update({
     region: "us-east-1"
 });
 const docClient = new aws_sdk_1.default.DynamoDB.DocumentClient();
-// const validRideGeofenceCodes: Array<string> =  [ 'E05000001', 'E05000002' ]
 function getValidGeofenceCodes(rideId) {
     return __awaiter(this, void 0, void 0, function* () {
         var params = {

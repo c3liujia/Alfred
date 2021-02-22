@@ -35,7 +35,7 @@ const express_1 = __importDefault(require("express"));
 const bodyparser = __importStar(require("body-parser"));
 const routes_1 = require("./enums/routes");
 const validateLocation_1 = __importDefault(require("./src/services/validateLocation"));
-const port = 3000;
+const port = 8080;
 const app = express_1.default();
 app.use(bodyparser.json());
 const startServer = () => __awaiter(void 0, void 0, void 0, function* () {
