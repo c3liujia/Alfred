@@ -31,25 +31,28 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-const geolib = __importStar(require("geolib"));
-const getValidGeofenceCodes_1 = __importDefault(require("./getValidGeofenceCodes"));
-const retrieveCoordinatesFromGeofenceCode_1 = __importDefault(require("./retrieveCoordinatesFromGeofenceCode"));
-function checkCoordinatesWithinBoundary(coordinates, boundary) {
-    console.log(coordinates);
-    const isCoordinatesWithinBoundary = geolib.isPointInPolygon(coordinates, boundary);
-    return isCoordinatesWithinBoundary;
-}
-function isWithinGeofence(rideId, coordinates) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const validGeofenceCodes = yield getValidGeofenceCodes_1.default(rideId);
-        let isCoordinatesWithinBoundary = false;
-        Boolean(validGeofenceCodes.length) && validGeofenceCodes.forEach((geofenceCode) => {
-            const boundary = retrieveCoordinatesFromGeofenceCode_1.default(geofenceCode);
-            isCoordinatesWithinBoundary = isCoordinatesWithinBoundary || checkCoordinatesWithinBoundary(coordinates, boundary);
-        });
-        return Boolean(isCoordinatesWithinBoundary);
-    });
-}
-exports.default = isWithinGeofence;
-;
-//# sourceMappingURL=isWithinGeofence.js.map
+const sendEmail_1 = __importDefault(require("../sendEmail"));
+const AWS = __importStar(require("aws-sdk"));
+jest.mock('aws-sdk', () => {
+    const lambdaInstance = {
+        invoke: jest.fn(),
+    };
+    const mockLambda = jest.fn(() => lambdaInstance);
+    return {
+        config: {
+            update: jest.fn()
+        },
+        Lambda: mockLambda
+    };
+});
+describe('sendEmail', () => {
+    test('when called, invokes lambda with correct params and message is logged', () => __awaiter(void 0, void 0, void 0, function* () {
+        const lambdaInstance = new AWS.Lambda();
+        yield sendEmail_1.default('user1');
+        expect(lambdaInstance.invoke).toHaveBeenCalledWith({
+            FunctionName: 'SendAlertEmail',
+            Payload: `{ "userId": "user1" }`
+        }, expect.any(Function));
+    }));
+});
+//# sourceMappingURL=sendEmail.spec.js.map
