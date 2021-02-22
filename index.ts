@@ -3,7 +3,7 @@ import * as bodyparser from 'body-parser';
 import { VALIDATE_RIDE_ROUTE } from './enums/routes';
 import validateLocation from './src/services/validateLocation';
 import validateLocationRequest from './src/services/requestTypes/validateLocationRequest';
-const port: Number = 8080;
+const port: Number = 3000;
 
 const app: express.Application = express();
 app.use(bodyparser.json());
